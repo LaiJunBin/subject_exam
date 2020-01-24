@@ -1,0 +1,69 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+body {
+    font-family: 微軟正黑體;
+}
+
+.router-link-exact-active {
+    color: #fff !important;
+}
+
+.v-spinner {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(200, 200, 200, .6);
+}
+
+.questions {
+    margin: 10px;
+}
+
+.question-options {
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.question-option {
+    padding: 5px 10px;
+
+    & * {
+        cursor: pointer;
+    }
+}
+
+.option-checked {
+    background: #39f;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.option-answer {
+    background: #ffa;
+}
+
+.option-correct {
+    background: #3f9;
+    color: black;
+}
+
+.option-fail {
+    background: #f33;
+}
+
+.option-checked.option-answer {
+    background: #3f9;
+    color: black;
+}

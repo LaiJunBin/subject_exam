@@ -86,8 +86,8 @@
                 <button class="btn btn-secondary" @click="isExam=false">返回</button>
                 綜合測驗
                 <button class="btn btn-info" @click="resetQuestions">重新測驗</button>
-                <button class="btn btn-success" @click="judgeAnswers" v-if="answerOptions.length===0">送出評分</button>
-                <h2 class="d-inline-block" v-if="answerOptions.length>0">
+                <button class="btn btn-success" @click="judgeAnswers" v-if="Object.keys(answerOptions).length===0">送出評分</button>
+                <h2 class="d-inline-block" v-if="Object.keys(answerOptions).length>0">
                     得分：
                     <span :class="{
                         'text-danger': score<60,
@@ -103,7 +103,7 @@
                                 :class="{
                                     'option-checked': Array.isArray(answers[question.id]) && answers[question.id].includes(option.id),
                                     'option-correct': judgeResult[option.id] === true,
-                                    'option-answer': answerOptions.includes(option.id),
+                                    'option-answer': answerOptions[question.id] && answerOptions[question.id].includes(option.id),
                                     'option-fail': judgeResult[option.id] === false,
                                 }">
                             <input :id="'option-'+option.id"
@@ -144,7 +144,7 @@
                 isExam:false,
                 answers: [],
                 judgeResult: [],
-                answerOptions: [],
+                answerOptions: {},
                 score: 0,
             }
         },
@@ -157,7 +157,7 @@
                 let questions = this.$store.getters.getExamQuestions;
                 this.answers = [];
                 this.judgeResult = [];
-                this.answerOptions = [];
+                this.answerOptions = {};
                 for(let question of questions){
                     this.answers[question.id] = [];
                 }
@@ -283,27 +283,23 @@
 
             judgeAnswers:function(){
                 this.judgeResult = [-1];
-                let options = this.answers.flat();
-                let answerOptions = this.questions.map(question=>question.answers).flat().map(answer => answer.option_id);
-                this.answerOptions = answerOptions;
+                this.answerOptions = Object.fromEntries(this.questions.map(question=>[question.id, question.answers.map(answer => answer.option_id)]));
+
                 let status = {
                     correct: 0,
                     fail: 0,
                     unanswered: 0,
                 };
 
-                for(let answer of this.answers){
-                    if(answer === undefined)
-                        continue;
-
-                    if(answer.length === 0){
+                for(let questionId in this.answerOptions){
+                    if(this.answers[questionId].length === 0){
                         status.unanswered++;
                         continue;
                     }
 
                     let bool = true;
-                    for(let option of answer){
-                        if(answerOptions.includes(option)){
+                    for(let option of [...this.answerOptions[questionId], ...this.answers[questionId]]){
+                        if(this.answers[questionId].includes(option) && this.answerOptions[questionId].includes(option)){
                             this.judgeResult[option] = true;
                         }else{
                             bool = false;

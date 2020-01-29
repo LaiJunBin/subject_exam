@@ -107,8 +107,7 @@
 
             judgeAnswers:function(){
                 this.judgeResult = [];
-                let options = this.answers.flat();
-                let answerOptions = this.category.questions.map(question=>question.answers).flat()
+                let answerOptions = Object.fromEntries(this.category.questions.map(question=>[question.id, question.answers]));
 
                 let status = {
                     correct: 0,
@@ -116,25 +115,21 @@
                     unanswered: 0,
                 };
 
-                for(let answer of this.answers){
-                    if(answer === undefined)
-                        continue;
-
-                    if(answer.length === 0){
+                for(let questionId in answerOptions){
+                    if(this.answers[questionId].length === 0){
                         status.unanswered++;
                         continue;
                     }
 
                     let bool = true;
-                    for(let option of answer){
-                        if(answerOptions.includes(option)){
+                    for(let option of [...answerOptions[questionId], ...this.answers[questionId]]){
+                        if(this.answers[questionId].includes(option) && answerOptions[questionId].includes(option)){
                             this.judgeResult[option] = true;
                         }else{
                             bool = false;
                             this.judgeResult[option] = false;
                         }
                     }
-
                     if(bool)
                         status.correct++;
                     else

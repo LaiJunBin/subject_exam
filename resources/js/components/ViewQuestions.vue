@@ -128,7 +128,8 @@
                             this.judgeResult[option] = true;
                         }else{
                             bool = false;
-                            this.judgeResult[option] = false;
+                            if(this.answers[questionId].includes(option))
+                                this.judgeResult[option] = false;
                         }
                     }
                     if(bool)

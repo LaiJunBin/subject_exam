@@ -82,11 +82,12 @@
 
 
         <div class="row flex-column" v-if="isExam===true">
-            <h1>
+            <h1 class="question-title">
                 <button class="btn btn-secondary" @click="isExam=false">返回</button>
                 綜合測驗
                 <button class="btn btn-info" @click="resetQuestions">重新測驗</button>
                 <button class="btn btn-success" @click="judgeAnswers" v-if="Object.keys(answerOptions).length===0">送出評分</button>
+                <a class="btn btn-light" href="#">回到頂端</a>
                 <h2 class="d-inline-block" v-if="Object.keys(answerOptions).length>0">
                     得分：
                     <span :class="{
@@ -252,6 +253,7 @@
                     data:this.payloads
                 }).then(res => {
                     if(res){
+                        document.scrollingElement.scrollTop = 0;
                         this.isExam = true;
                     }
                 });

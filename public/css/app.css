@@ -11356,8 +11356,20 @@ a.text-dark:focus {
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 微軟正黑體;
+}
+
+.question-title {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 10px;
 }
 
 .router-link-exact-active {

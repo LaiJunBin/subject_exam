@@ -1,12 +1,13 @@
 <template>
     <div class="container mt-2">
         <div class="row flex-column" v-if="category">
-            <h1>
+            <h1 class="question-title">
                 {{ category.name }}
                 <button class="btn" @click="viewAnswer=!viewAnswer" :class="viewAnswer?'btn-dark':'btn-info'" v-text="(viewAnswer?'隱藏':'檢視')+'答案'"></button>
                 <button class="btn btn-warning" @click="shuffle">打亂順序</button>
                 <button class="btn btn-secondary" @click="resetAnswers">重置答案</button>
                 <button class="btn btn-success" @click="judgeAnswers">檢查結果</button>
+                <a class="btn btn-light" href="#">回到頂端</a>
             </h1>
             <main>
                 <div v-for="(question, index) in category.questions" class="questions">

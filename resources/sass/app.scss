@@ -7,8 +7,19 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 微軟正黑體;
+}
+
+.question-title {
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 10px;
 }
 
 .router-link-exact-active {

@@ -8,7 +8,7 @@ import router from './routes';
 import store from './store';
 
 require('./bootstrap');
-
+require('./prototype');
 window.Vue = require('vue');
 Vue.use(VueRouter);
 /**
@@ -38,5 +38,20 @@ const app = new Vue({
         loading() {
             return this.$store.getters.getLoadingStatus;
         }
+    },
+    mounted: function () {
+        var scrollY = 0;
+
+        document.addEventListener('scroll', function (e) {
+            let windowScrollY = window.scrollY;
+            if (Math.abs(windowScrollY - scrollY) >= 200) {
+                if (Math.sign(windowScrollY - scrollY) === 1) {
+                    $(".question-title").slideUp();
+                } else {
+                    $(".question-title").slideDown();
+                }
+                scrollY = windowScrollY;
+            }
+        })
     }
 });

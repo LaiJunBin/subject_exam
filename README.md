@@ -4,4 +4,4 @@
 
 *(題庫中包含圖片的題目沒有處理(占少數))
 
-[Demo](http://18.179.174.169/subject_exam/)
+[Demo](https://subject-exam.laiweb.org/)
